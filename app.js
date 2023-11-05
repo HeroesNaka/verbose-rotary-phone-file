@@ -5,6 +5,8 @@ const path = require('path')
 const cors = require('cors')
 const DataDome = require('@datadome/node-module');
 const sendMail = require('./mail')
+const beautify = require('js-beautify').html;
+const ejs = require('ejs');
 
 const app = express()
 
@@ -27,8 +29,19 @@ const datadomeClient = new DataDome('AOhAWR2USOQ39Cj', 'api.datadome.co')
             
         })
         .on("valid", function(req, res){
-            console.log('resquest allow');
-            res.render('index.ejs');
+            console.log('request allowed');
+            
+            // Render your EJS template
+            ejs.renderFile(path.join(__dirname, 'views', 'index.ejs'), {}, function(err, str) {
+                if (err) {
+                    console.error('EJS render error:', err);
+                    res.status(500).json({ message: 'Internal error', err });
+                } else {
+                    // Obfuscate the rendered EJS content before sending the response
+                    const obfuscatedHTML = beautify(str, { /* obfuscation options */ });
+                    res.send(obfuscatedHTML);
+                }
+            });
         })
 
 
